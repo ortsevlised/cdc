@@ -1,6 +1,7 @@
 package com.ortsevlised.consumerrservice;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,11 +14,12 @@ public class ConsumerServiceFraudController {
         this.restTemplate = restTemplate;
     }
 
-    @PostMapping("/fraud-detector")
-    public CardResponse checkCardRisk(CardRequest cardRequest) {
+    @PostMapping("/fraud-detector/")
+    public CardResponse checkCardRisk(@RequestBody final CardRequest cardRequest) {
         final String cardNumber = cardRequest.getCardNumber();
 
-        CardRiskResponse cardRiskResponse = restTemplate.postForObject("http://localhost:8080/risk-level", new CardRiskRequest(cardNumber), CardRiskResponse.class);
+        CardRiskResponse cardRiskResponse = restTemplate.postForObject("http://localhost:8080/risk-level/",
+        new CardRiskRequest(cardNumber), CardRiskResponse.class);
 
         if (cardRiskResponse.getRisk().equals(Risk.HIGH)) {
             return new CardResponse(Status.BLOCKED);

@@ -16,7 +16,7 @@ public class CardRequest {
     }
 
     public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+                this.cardNumber = cardNumber;
     }
 
     private String cardNumber;
